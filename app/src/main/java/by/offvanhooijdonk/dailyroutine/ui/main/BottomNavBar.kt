@@ -13,15 +13,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDestination.Companion.hierarchy
 import by.offvanhooijdonk.dailyroutine.R
 import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
 
 @Composable
-fun BottomNavBar(currentRoute: String, onClick: (route: String) -> Unit) {
+fun BottomNavBar(currentNavEntry: NavBackStackEntry?, onClick: (route: String) -> Unit) {
     NavigationBar {
         NavBarItem.entries.forEach { item ->
             NavigationBarItem(
-                selected = currentRoute.startsWith(item.navRoute), // todo split current route by delimiter and take at index 0
+                selected = currentNavEntry?.destination?.hierarchy?.any { it.route == item.navRoute } ?: false, // todo split current route by delimiter and take at index 0
                 icon = { Icon(painter = painterResource(item.iconRes), contentDescription = null) },
                 label = { Text(text = stringResource(item.titleRes)) },
                 onClick = { onClick(item.navRoute) },
@@ -42,13 +44,13 @@ private enum class NavBarItem(
 ) {
     TIMELINE(R.drawable.ic_timeline, R.string.nav_title_timeline, NavVMScreen.TimeLineList.route),
     TERMLESS(R.drawable.ic_termless, R.string.nav_title_termless, NavVMScreen.TermlessList.route),
-    //MORE(R.drawable.ic_more, R.string.nav_title_more, NavVMScreen.TimeLineList.route),
+    MORE(R.drawable.ic_more, R.string.nav_title_more, NavVMScreen.MoreScreen.route),
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun Preview_BottomNavBar() {
     DailyRoutineTheme {
-        BottomNavBar(currentRoute = NavVMScreen.TimeLineList.route) {}
+        BottomNavBar(null) {}
     }
 }

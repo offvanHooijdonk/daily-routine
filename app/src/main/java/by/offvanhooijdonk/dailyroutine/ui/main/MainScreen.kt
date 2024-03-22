@@ -5,24 +5,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModel: MainViewModel, navHolder: NavHolder) {
+    val navController = rememberNavController()
+    navHolder.storeNavController(navController)
     Scaffold(
-        bottomBar = { BottomNavBar("") {} }
+        bottomBar = { BottomNavBar(navHolder.getBackStackEntryAsState().value) { navHolder.goToRoot(it) } }
     ) { contentPaddings ->
         Surface(modifier = Modifier.padding(contentPaddings)) {
-            AppNavigation()
+            AppNavigation(navController)
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun Preview_MainScreen() {
-    DailyRoutineTheme {
-        MainScreen()
     }
 }

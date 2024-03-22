@@ -10,21 +10,20 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import by.offvanhooijdonk.dailyroutine.ui.more_screen.MoreScreen
+import by.offvanhooijdonk.dailyroutine.ui.more_screen.MoreScreenViewModel
+import by.offvanhooijdonk.dailyroutine.ui.termless.TermlessListScreen
+import by.offvanhooijdonk.dailyroutine.ui.termless.TermlessListViewModel
 import by.offvanhooijdonk.dailyroutine.ui.timeline.TimelineListScreen
 import by.offvanhooijdonk.dailyroutine.ui.timeline.TimelineListViewModel
 import org.koin.androidx.compose.navigation.koinNavViewModel
 
 @Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
+fun AppNavigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = NavVMScreen.TimeLineList.route) {
         composableVM(screen = NavVMScreen.TimeLineList)
-        /*composable(route = NavDestinations.TERMLESS_LIST.route) {
-
-        }
-        composable(route = NavDestinations.MORE.route) {
-
-        }*/
+        composableVM(screen = NavVMScreen.TermlessList)
+        composableVM(screen = NavVMScreen.MoreScreen)
     }
 }
 
@@ -42,12 +41,21 @@ sealed interface NavVMScreen<V: ViewModel> {
         }
     }
 
-    data object TermlessList : NavVMScreen<TimelineListViewModel> {
+    data object TermlessList : NavVMScreen<TermlessListViewModel> {
         override val route: String = "termless_list"
 
         @Composable
-        override fun Composable(vm: TimelineListViewModel) {
-            TimelineListScreen(vm.uiState.collectAsState().value) // todo
+        override fun Composable(vm: TermlessListViewModel) {
+            TermlessListScreen() // todo
+        }
+    }
+
+    data object MoreScreen : NavVMScreen<MoreScreenViewModel> {
+        override val route: String = "more_screen"
+
+        @Composable
+        override fun Composable(vm: MoreScreenViewModel) {
+            MoreScreen() // todo
         }
     }
 }
@@ -78,11 +86,4 @@ inline fun <reified V: ViewModel> NavGraphBuilder.composableVM(
     ) {
         screen.Composable(vm = koinNavViewModel<V>())
     }
-}
-
-@Deprecated("")
-enum class NavDestinations(val route: String) {
-    TIMELINE_LIST("timeline_list"),
-    TERMLESS_LIST("termless_list"),
-    MORE("more_screen"),
 }
