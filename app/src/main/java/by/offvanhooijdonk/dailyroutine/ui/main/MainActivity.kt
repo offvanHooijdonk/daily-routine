@@ -21,14 +21,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun MainScreen() {
-    Scaffold(
-        bottomBar = { BottomNavBar() }
-    ) { contentPaddings ->
-        Surface(modifier = Modifier.padding(contentPaddings)) {
-            AppNavigation()
-        }
-    }
-}
