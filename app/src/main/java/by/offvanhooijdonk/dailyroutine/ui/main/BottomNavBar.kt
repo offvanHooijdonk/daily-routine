@@ -19,18 +19,18 @@ import by.offvanhooijdonk.dailyroutine.R
 import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
 
 @Composable
-fun BottomNavBar(currentNavEntry: NavBackStackEntry?, onClick: (route: String) -> Unit) {
+fun BottomNavBar(currentNavEntry: NavBackStackEntry?, onAction: (MainViewModel.Action) -> Unit) {
     NavigationBar {
         NavBarItem.entries.forEach { item ->
             NavigationBarItem(
-                selected = currentNavEntry?.destination?.hierarchy?.any { it.route == item.navRoute } ?: false, // todo split current route by delimiter and take at index 0
+                selected = currentNavEntry?.destination?.hierarchy?.any { it.route == item.navRoute } ?: false,
                 icon = { Icon(painter = painterResource(item.iconRes), contentDescription = null) },
                 label = { Text(text = stringResource(item.titleRes)) },
-                onClick = { onClick(item.navRoute) },
+                onClick = { onAction(MainViewModel.Action.OnNavClick(item.navRoute)) },
             )
         }
 
-        FloatingActionButton(onClick = { }) {
+        FloatingActionButton(onClick = { onAction(MainViewModel.Action.OnAddTaskClick) }) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add a task")
         }
         Spacer(modifier = Modifier.width(8.dp)) // keep in mind that container also adds space between items
