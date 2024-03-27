@@ -6,4 +6,4 @@ val appModule = module {
 
 }
 
-val allModules = listOf(appModule, uiModule)
+val allModules = listOf(appModule, uiModule, daoModule)
