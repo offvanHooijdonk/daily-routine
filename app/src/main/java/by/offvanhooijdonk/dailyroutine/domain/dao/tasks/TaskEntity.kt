@@ -8,4 +8,5 @@ data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
+    val createdAt: Long,
 )

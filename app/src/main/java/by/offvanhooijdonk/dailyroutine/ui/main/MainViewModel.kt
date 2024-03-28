@@ -1,26 +1,41 @@
 package by.offvanhooijdonk.dailyroutine.ui.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import by.offvanhooijdonk.dailyroutine.domain.dao.tasks.TaskDao
+import by.offvanhooijdonk.dailyroutine.domain.dao.tasks.TaskEntity
+import by.offvanhooijdonk.dailyroutine.domain.model.TaskModel
+import by.offvanhooijdonk.dailyroutine.domain.model.toNewEntity
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
-class MainViewModel(private val navHolder: NavHolder) : ViewModel() {
+class MainViewModel(
+    private val navHolder: NavHolder,
+    private val taskDao: TaskDao,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(State())
     val uiState = _uiState.asStateFlow()
 
-    val sideEffectFlow = MutableSharedFlow<SideEffect>(replay = 0, extraBufferCapacity = 4)
-
     fun onAction(action: Action) {
         when (action) {
-            Action.OnAddTaskClick -> _uiState.update { it.copy(isShowAddTaskForm = true) }
+            Action.OnAddTaskClick -> {
+                clearTaskForm()
+                _uiState.update { it.copy(isShowAddTaskForm = true) }
+            }
             is Action.OnNavClick -> navHolder.goToRoot(action.route)
             Action.OnAddTaskDialogDismissRequest -> _uiState.update { it.copy(isShowAddTaskForm = false) }
+            is Action.OnTaskTitleInput -> _uiState.update { it.copy(taskTitleInput = action.input) }
             Action.OnAddTaskSaveClick -> {
-                // todo save to DAO
-                // todo send to UI that modal can be closed
-                //_uiState.update { it.copy(isShowAddTaskForm = false) }
-                sideEffectFlow.tryEmit(SideEffect.CloseAddTaskDialogEffect)
+                viewModelScope.launch {
+                    taskDao.insert(TaskModel(0, _uiState.value.taskTitleInput).toNewEntity())
+                    clearTaskForm()
+                }
             }
         }
+    }
+
+    private fun clearTaskForm() {
+        _uiState.update { it.copy(taskTitleInput = "") }
     }
 
     sealed interface Action {
@@ -28,14 +43,12 @@ class MainViewModel(private val navHolder: NavHolder) : ViewModel() {
         data object OnAddTaskClick : Action
         data object OnAddTaskDialogDismissRequest : Action
         data object OnAddTaskSaveClick : Action
-    }
-
-    sealed interface SideEffect {
-        data object CloseAddTaskDialogEffect: SideEffect
+        data class OnTaskTitleInput(val input: String) : Action
     }
 
     data class State(
         val isShowAddTaskForm: Boolean = false,
-        //val is: Boolean = false,
+
+        val taskTitleInput: String = "",
     )
 }

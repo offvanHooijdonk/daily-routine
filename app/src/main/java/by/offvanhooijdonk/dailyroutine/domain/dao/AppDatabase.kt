@@ -12,7 +12,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
 
     companion object {
-        fun create(applicationContext: Context) = Room.databaseBuilder(applicationContext, AppDatabase::class.java, DB_NAME,).build()
+        fun create(applicationContext: Context) = Room.databaseBuilder(applicationContext, AppDatabase::class.java, DB_NAME).build()
 
         private const val DB_NAME = "daily-routine-0.0.1"
     }

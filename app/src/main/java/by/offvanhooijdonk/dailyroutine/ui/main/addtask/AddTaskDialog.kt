@@ -18,14 +18,18 @@ import by.offvanhooijdonk.dailyroutine.ui.main.MainViewModel
 import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
 
 @Composable
-fun AddTaskForm(modifier: Modifier, onAction: (MainViewModel.Action) -> Unit, onDismiss: () -> Unit) {
+fun AddTaskForm(modifier: Modifier, state: MainViewModel.State, onAction: (MainViewModel.Action) -> Unit, onDismiss: () -> Unit) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         val focusRequester = FocusRequester()
-        TextField(modifier = Modifier.focusRequester(focusRequester).weight(1.0f), value = "", onValueChange = {})
+        TextField(
+            modifier = Modifier.focusRequester(focusRequester).weight(1.0f),
+            value = state.taskTitleInput,
+            onValueChange = { onAction(MainViewModel.Action.OnTaskTitleInput(it)) }
+        )
         Spacer(modifier = Modifier.width(40.dp))
         FloatingActionButton(onClick = {
             onAction(MainViewModel.Action.OnAddTaskSaveClick)
@@ -42,6 +46,6 @@ fun AddTaskForm(modifier: Modifier, onAction: (MainViewModel.Action) -> Unit, on
 @Composable
 private fun Preview_AddTaskForm() {
     DailyRoutineTheme {
-        AddTaskForm(modifier = Modifier.fillMaxWidth(), onAction = {}, onDismiss = {})
+        AddTaskForm(modifier = Modifier.fillMaxWidth(), state = MainViewModel.State(),  onAction = {}, onDismiss = {})
     }
 }

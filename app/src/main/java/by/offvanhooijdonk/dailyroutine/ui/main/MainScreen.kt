@@ -24,7 +24,9 @@ fun MainScreen(viewModel: MainViewModel, navHolder: NavHolder) {
         bottomBar = { BottomNavBar(navHolder.getBackStackEntryAsState().value, viewModel::onAction) }
     ) { contentPaddings ->
         Surface(modifier = Modifier.padding(contentPaddings)) {
-            AddTaskModalDialog(isShow = state.isShowAddTaskForm, viewModel::onAction)
+            if (state.isShowAddTaskForm) {
+                AddTaskModalDialog(state = state, onAction = viewModel::onAction)
+            }
 
             AppNavigation(navController)
         }
@@ -32,21 +34,25 @@ fun MainScreen(viewModel: MainViewModel, navHolder: NavHolder) {
 }
 
 @Composable
-fun AddTaskModalDialog(isShow: Boolean, onAction: (MainViewModel.Action) -> Unit) {
+fun AddTaskModalDialog(state: MainViewModel.State, onAction: (MainViewModel.Action) -> Unit) {
     val modalSheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     fun onClosed() {
         onAction(MainViewModel.Action.OnAddTaskDialogDismissRequest)
     }
 
-    if (isShow) {
-        ModalBottomSheet(
-            onDismissRequest = ::onClosed,
-            sheetState = modalSheetState,
+    ModalBottomSheet(
+        onDismissRequest = ::onClosed,
+        sheetState = modalSheetState,
+    ) {
+        AddTaskForm(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 0.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
+            state = state,
+            onAction = onAction,
         ) {
-            AddTaskForm(modifier = Modifier.fillMaxWidth().padding(top = 0.dp, bottom = 8.dp, start = 16.dp, end = 16.dp), onAction) {
-                scope.launch { modalSheetState.hide() }.invokeOnCompletion { onClosed() }
-            }
+            scope.launch { modalSheetState.hide() }.invokeOnCompletion { onClosed() }
         }
     }
 }

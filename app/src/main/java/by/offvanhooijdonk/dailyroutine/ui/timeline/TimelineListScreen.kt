@@ -28,7 +28,7 @@ fun TimelineListScreen(state: TimelineListViewModel.UiState) {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp, horizontal = 16.dp)) {
-                Text(text = task.text, style = MaterialTheme.typography.titleMedium)
+                Text(text = task.title, style = MaterialTheme.typography.titleMedium)
             }
         }
     }
