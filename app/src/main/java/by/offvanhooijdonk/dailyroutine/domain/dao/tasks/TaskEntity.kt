@@ -9,4 +9,5 @@ data class TaskEntity(
     val id: Int,
     val title: String,
     val createdAt: Long,
+    val isMarked: Boolean = false,
 )

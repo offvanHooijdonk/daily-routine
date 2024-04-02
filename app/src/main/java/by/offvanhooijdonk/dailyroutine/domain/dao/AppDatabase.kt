@@ -14,6 +14,6 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         fun create(applicationContext: Context) = Room.databaseBuilder(applicationContext, AppDatabase::class.java, DB_NAME).build()
 
-        private const val DB_NAME = "daily-routine-0.0.1"
+        private const val DB_NAME = "daily-routine-0.0.2"
     }
 }

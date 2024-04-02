@@ -21,6 +21,7 @@ fun MainScreen(viewModel: MainViewModel, navHolder: NavHolder) {
     val state = viewModel.uiState.collectAsState().value
 
     Scaffold(
+        topBar = { TopBar() },
         bottomBar = { BottomNavBar(navHolder.getBackStackEntryAsState().value, viewModel::onAction) }
     ) { contentPaddings ->
         Surface(modifier = Modifier.padding(contentPaddings)) {

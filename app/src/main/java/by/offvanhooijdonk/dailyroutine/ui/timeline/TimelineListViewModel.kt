@@ -25,6 +25,18 @@ class TimelineListViewModel(
         _uiState.update { it.copy(tasksList = previewTasks) }
     }
 
+    fun onAction(action: Action) {
+        when (action) {
+            is Action.OnTaskClick -> Unit
+            is Action.OnTaskToggleMarked -> Unit
+        }
+    }
+
+    sealed interface Action {
+        data class OnTaskClick(val taskId: Int) : Action
+        data class OnTaskToggleMarked(val taskId: Int) : Action
+    }
+
     data class UiState(
         val tasksList: List<TaskModel> = listOf()
     )

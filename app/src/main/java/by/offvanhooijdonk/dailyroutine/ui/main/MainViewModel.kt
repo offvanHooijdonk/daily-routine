@@ -27,7 +27,7 @@ class MainViewModel(
             is Action.OnTaskTitleInput -> _uiState.update { it.copy(taskTitleInput = action.input) }
             Action.OnAddTaskSaveClick -> {
                 viewModelScope.launch {
-                    taskDao.insert(TaskModel(0, _uiState.value.taskTitleInput).toNewEntity())
+                    taskDao.insert(TaskModel(0, _uiState.value.taskTitleInput, isMarked = false).toNewEntity())
                     clearTaskForm()
                 }
             }

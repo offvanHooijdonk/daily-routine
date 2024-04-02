@@ -37,7 +37,7 @@ sealed interface NavVMScreen<V: ViewModel> {
 
         @Composable
         override fun Composable(vm: TimelineListViewModel) {
-            TimelineListScreen(vm.uiState.collectAsState().value)
+            TimelineListScreen(vm.uiState.collectAsState().value, vm::onAction)
         }
     }
 
