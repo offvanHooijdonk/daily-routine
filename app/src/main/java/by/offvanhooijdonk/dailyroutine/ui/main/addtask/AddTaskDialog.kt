@@ -19,26 +19,35 @@ import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
 
 @Composable
 fun AddTaskForm(modifier: Modifier, state: MainViewModel.State, onAction: (MainViewModel.Action) -> Unit, onDismiss: () -> Unit) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        val focusRequester = FocusRequester()
-        TextField(
-            modifier = Modifier.focusRequester(focusRequester).weight(1.0f),
-            value = state.taskTitleInput,
-            onValueChange = { onAction(MainViewModel.Action.OnTaskTitleInput(it)) }
-        )
-        Spacer(modifier = Modifier.width(40.dp))
-        FloatingActionButton(onClick = {
-            onAction(MainViewModel.Action.OnAddTaskSaveClick)
-            onDismiss()
-        }) {
-            Icon(painter = painterResource(R.drawable.ic_save_task), contentDescription = null)
-        }
+    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val focusRequester = FocusRequester()
+            TextField(
+                modifier = Modifier
+                    .focusRequester(focusRequester)
+                    .weight(1.0f),
+                value = state.taskTitleInput,
+                onValueChange = { onAction(MainViewModel.Action.OnTaskTitleInput(it)) }
+            )
+            Spacer(modifier = Modifier.width(40.dp))
+            FloatingActionButton(onClick = {
+                onAction(MainViewModel.Action.OnAddTaskSaveClick)
+                onDismiss()
+            }) {
+                Icon(painter = painterResource(R.drawable.ic_save_task), contentDescription = null)
+            }
 
-        LaunchedEffect(key1 = Unit) { focusRequester.requestFocus() }
+            LaunchedEffect(key1 = Unit) { focusRequester.requestFocus() }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(onClick = { /*TODO*/ }, label = { Text(text = "Today") }, selected = false)
+            FilterChip(onClick = { /*TODO*/ }, label = { Text(text = "Tomorrow") }, selected = false)
+            FilterChip(onClick = { /*TODO*/ }, label = { Text(text = "Wed, 20 Oct 2024 12:55") }, selected = true)
+        }
     }
 }
 
