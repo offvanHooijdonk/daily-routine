@@ -1,5 +1,6 @@
 package by.offvanhooijdonk.dailyroutine.di
 
+import by.offvanhooijdonk.dailyroutine.ui.main.EditEventTransmitter
 import by.offvanhooijdonk.dailyroutine.ui.main.MainViewModel
 import by.offvanhooijdonk.dailyroutine.ui.main.NavHolder
 import by.offvanhooijdonk.dailyroutine.ui.more_screen.MoreScreenViewModel
@@ -15,4 +16,5 @@ val uiModule = module {
     viewModelOf(::MoreScreenViewModel)
 
     single { NavHolder() }
+    single { EditEventTransmitter() }
 }
