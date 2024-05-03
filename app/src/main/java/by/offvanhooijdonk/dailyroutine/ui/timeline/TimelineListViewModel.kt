@@ -30,7 +30,10 @@ class TimelineListViewModel(
 
     fun onAction(action: Action) {
         when (action) {
-            is Action.OnTaskClick -> Unit
+            is Action.OnTaskClick -> viewModelScope.launch {
+                editEventTransmitter.sentEditEvent(MainViewModel.EditEvent.EditTask(action.taskId))
+            }
+
             is Action.OnTaskToggleMarked -> Unit
         }
     }
