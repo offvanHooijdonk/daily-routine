@@ -1,4 +1,4 @@
-package by.offvanhooijdonk.dailyroutine.ui.main
+package by.offvanhooijdonk.dailyroutine.ui.nav
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

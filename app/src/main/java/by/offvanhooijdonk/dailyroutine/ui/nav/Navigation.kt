@@ -1,4 +1,4 @@
-package by.offvanhooijdonk.dailyroutine.ui.main
+package by.offvanhooijdonk.dailyroutine.ui.nav
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import by.offvanhooijdonk.dailyroutine.ui.more_screen.MoreScreen
 import by.offvanhooijdonk.dailyroutine.ui.more_screen.MoreScreenViewModel
 import by.offvanhooijdonk.dailyroutine.ui.termless.TermlessListScreen

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import by.offvanhooijdonk.dailyroutine.domain.dao.tasks.TaskDao
 import by.offvanhooijdonk.dailyroutine.domain.model.TaskModel
 import by.offvanhooijdonk.dailyroutine.domain.model.toModel
-import by.offvanhooijdonk.dailyroutine.ui.main.EditEventTransmitter
+import by.offvanhooijdonk.dailyroutine.ui.nav.EditEventTransmitter
 import by.offvanhooijdonk.dailyroutine.ui.main.MainViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

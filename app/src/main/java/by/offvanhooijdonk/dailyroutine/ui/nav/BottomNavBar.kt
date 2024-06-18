@@ -1,4 +1,4 @@
-package by.offvanhooijdonk.dailyroutine.ui.main
+package by.offvanhooijdonk.dailyroutine.ui.nav
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
 import by.offvanhooijdonk.dailyroutine.R
+import by.offvanhooijdonk.dailyroutine.ui.main.MainViewModel
 import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
 
 @Composable

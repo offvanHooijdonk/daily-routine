@@ -3,11 +3,15 @@ package by.offvanhooijdonk.dailyroutine.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.offvanhooijdonk.dailyroutine.domain.dao.tasks.TaskDao
-import by.offvanhooijdonk.dailyroutine.domain.dao.tasks.TaskEntity
 import by.offvanhooijdonk.dailyroutine.domain.model.TaskModel
 import by.offvanhooijdonk.dailyroutine.domain.model.toNewEntity
+import by.offvanhooijdonk.dailyroutine.ui.nav.EditEventTransmitter
+import by.offvanhooijdonk.dailyroutine.ui.nav.NavHolder
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import pro.respawn.flowmvi.api.MVIAction
+import pro.respawn.flowmvi.api.MVIIntent
+import pro.respawn.flowmvi.api.MVIState
 
 class MainViewModel(
     private val editEventTransmitter: EditEventTransmitter,
@@ -45,12 +49,16 @@ class MainViewModel(
         _uiState.update { it.copy(taskTitleInput = "") }
     }
 
-    sealed interface Action {
+    sealed interface Action: MVIIntent {
         data class OnNavClick(val route: String) : Action
         data object OnAddTaskClick : Action
         data object OnAddTaskDialogDismissRequest : Action
         data object OnAddTaskSaveClick : Action
         data class OnTaskTitleInput(val input: String) : Action
+    }
+
+    sealed interface SideEffect : MVIAction {
+        data class ErrorMessage(val message: String) : SideEffect
     }
 
     sealed interface EditEvent {
@@ -62,5 +70,5 @@ class MainViewModel(
         val isShowAddTaskForm: Boolean = false,
 
         val taskTitleInput: String = "",
-    )
+    ) : MVIState
 }

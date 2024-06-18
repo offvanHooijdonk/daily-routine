@@ -1,5 +1,6 @@
-package by.offvanhooijdonk.dailyroutine.ui.main
+package by.offvanhooijdonk.dailyroutine.ui.nav
 
+import by.offvanhooijdonk.dailyroutine.ui.main.MainViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
