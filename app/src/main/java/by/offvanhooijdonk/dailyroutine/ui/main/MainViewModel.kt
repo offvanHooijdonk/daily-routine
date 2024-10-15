@@ -1,26 +1,19 @@
 package by.offvanhooijdonk.dailyroutine.ui.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.offvanhooijdonk.dailyroutine.ui.nav.EditEventTransmitter
 import by.offvanhooijdonk.dailyroutine.ui.nav.NavHolder
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.get
-import org.koin.core.qualifier.qualifier
 import pro.respawn.flowmvi.api.MVIAction
 import pro.respawn.flowmvi.api.MVIIntent
 import pro.respawn.flowmvi.api.MVIState
-import pro.respawn.flowmvi.android.StoreViewModel
-import pro.respawn.flowmvi.dsl.subscribe
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-private typealias StViewModel = StoreViewModel<MainViewModel.State, MainViewModel.Action, MainViewModel.SideEffect>
 class MainViewModel(
     private val editEventTransmitter: EditEventTransmitter,
     private val navHolder: NavHolder,
-    private val addTaskContainer: AddTaskContainer,
+    //private val addTaskContainer: AddTaskContainer,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(State())
     val uiState = _uiState.asStateFlow()
@@ -30,11 +23,11 @@ class MainViewModel(
             _uiState.update { it.copy(isShowAddTaskForm = true) }
         }.launchIn(viewModelScope)
 
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             subscribe(addTaskContainer.store) { state ->
                 _uiState.update { state }
             }
-        }
+        }*/
     }
 
     fun onAction(action: Action) {
@@ -52,8 +45,8 @@ class MainViewModel(
                         taskDao.insert(TaskModel(0, _uiState.value.taskTitleInput, isMarked = false).toNewEntity())
                         clearTaskForm()
                     }*/
-                    Log.d("👀", "Intent passed")
-                    addTaskContainer.store.intent(action)
+                    /*Log.d("👀", "Intent passed")
+                    addTaskContainer.store.intent(action)*/
                 }
             }
         }

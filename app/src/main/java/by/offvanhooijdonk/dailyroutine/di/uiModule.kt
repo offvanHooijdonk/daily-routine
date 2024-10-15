@@ -8,10 +8,8 @@ import by.offvanhooijdonk.dailyroutine.ui.more_screen.MoreScreenViewModel
 import by.offvanhooijdonk.dailyroutine.ui.termless.TermlessListViewModel
 import by.offvanhooijdonk.dailyroutine.ui.timeline.TimelineListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.core.qualifier.qualifier
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import pro.respawn.flowmvi.android.StoreViewModel
+
 
 val uiModule = module {
     viewModelOf(::MainViewModel)
@@ -21,6 +19,6 @@ val uiModule = module {
 
     single { NavHolder() }
     single { EditEventTransmitter() }
-    viewModel(qualifier<AddTaskContainer>()) { StoreViewModel(get<AddTaskContainer>()) }
+
     single { AddTaskContainer(get()) }
 }

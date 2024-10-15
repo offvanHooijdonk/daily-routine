@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.flowmvi.android)
+    implementation(libs.flowmvi.android.compose) {
+        //exclude(group = "androidx.lifecycle", module = "lifecycle-viewmodel-android")
+    }
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

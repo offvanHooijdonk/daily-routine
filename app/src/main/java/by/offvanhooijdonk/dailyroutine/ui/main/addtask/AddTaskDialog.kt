@@ -2,6 +2,7 @@
 
 package by.offvanhooijdonk.dailyroutine.ui.main.addtask
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,11 +15,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.offvanhooijdonk.dailyroutine.R
+import by.offvanhooijdonk.dailyroutine.ui.main.AddTaskContainer
 import by.offvanhooijdonk.dailyroutine.ui.main.MainViewModel
 import by.offvanhooijdonk.dailyroutine.ui.theme.DailyRoutineTheme
+import org.koin.compose.koinInject
+import pro.respawn.flowmvi.compose.dsl.DefaultLifecycle
+import pro.respawn.flowmvi.compose.dsl.subscribe
 
 @Composable
 fun AddTaskForm(modifier: Modifier, state: MainViewModel.State, onAction: (MainViewModel.Action) -> Unit, onDismiss: () -> Unit) {
+    val vm = koinInject<AddTaskContainer>()
+    val vmState = vm.store.subscribe(DefaultLifecycle) {
+        Log.d("👀", "State updated $it")
+    }
+
     Column(modifier = Modifier.padding(bottom = 8.dp)) {
         Row(
             modifier = modifier,
@@ -35,7 +45,9 @@ fun AddTaskForm(modifier: Modifier, state: MainViewModel.State, onAction: (MainV
             )
             Spacer(modifier = Modifier.width(40.dp))
             FloatingActionButton(onClick = {
-                onAction(MainViewModel.Action.OnAddTaskSaveClick)
+                /*onAction(MainViewModel.Action.OnAddTaskSaveClick)*/
+                Log.d("👀", "Intent passed from Compose")
+                vm.store.intent(MainViewModel.Action.OnAddTaskSaveClick)
                 onDismiss()
             }) {
                 Icon(painter = painterResource(R.drawable.ic_save_task), contentDescription = null)
